@@ -20,6 +20,76 @@
                     @endif
 
                     <div>
+                        
+                        <div>
+                            Średnia inflacja z ostatnich okresów: <b>{{round($conditions->avg('inflation'), 2)}}</b>
+                        </div>
+                        <div>
+                            Średni kurs euro z ostatnich okresów: <b>{{round($conditions->avg('euro_currency'), 2)}}</b>
+                        </div>
+
+                        <div>
+                            Średni kurs dolara amerykańskiego z ostatnich okresów: <b>{{round($conditions->avg('dolar_currency'), 2)}}</b>
+                        </div>
+
+                        <div>
+                            Średni kurs funta brytyjskiego z ostatnich okresów: <b>{{round($conditions->avg('funt_british_currency'), 2)}}</b>
+                        </div>
+
+                        <div>
+                            <?php 
+$sum =0;
+$counter=0;
+                            ?>
+@foreach($conditions as $condition)
+@if($condition->situation=="dobra")
+<?php 
+$situation=3; 
+//$situation;
+?>
+@elseif($condition->situation=="umiarkowana")
+<?php 
+$situation=2; 
+//$situation;
+?>
+@else
+<?php 
+$situation=1; 
+//$situation;
+?>
+@endif
+
+<?php 
+$sum = $sum+$situation;
+$counter++;
+?>
+@endforeach
+
+<?php 
+// echo $sum;
+// echo $counter;
+$avg = $sum/$counter;
+// echo $avg;
+if($avg==3)
+{
+    $situation_country = "Dobra";
+}
+elseif($avg>=2 && $avg<3)
+{
+    $situation_country = "Umiarkowana";
+}
+else 
+{
+    $situation_country = "Zła";    
+}
+
+echo "Sytuacja w kraju: <b>".$situation_country."</b>";
+?>
+
+</div>
+                    </div>
+
+                    <div>
                         <form method="POST" action="{{route('conditions-simulation-update')}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                             <input type="hidden" name="id" value="{{$conditions_simulation->id}}">

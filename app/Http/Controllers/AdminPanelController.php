@@ -136,8 +136,10 @@ class AdminPanelController extends Controller
 
     public function conditions_simulation_edit($id)
     {
+        $conditions = Condition::get();
+
         $conditions_simulation = SimulationCondition::find($id);
-        return view('admin.conditions.edit_conditions_simulation', ['conditions_simulation'=>$conditions_simulation]);
+        return view('admin.conditions.edit_conditions_simulation', ['conditions_simulation'=>$conditions_simulation, 'conditions'=>$conditions]);
     }
 
     public function conditions_simulation_update(Request $request)
