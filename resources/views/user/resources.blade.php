@@ -28,6 +28,7 @@
                                 <tr>
                                     <td>Id</td>
                                     <td>Komputer</td>
+                                    <td>Cena jednostkowa</td>
                                     <td>Ilość</td>
                                     <td>Wartość</td>
                                 </tr>
@@ -40,18 +41,47 @@
                                         <?php echo $counter; $counter++; ?>
                                     </td>
                                     <td>
-                                    {{$resource->computer_id}}
+                                    {{$resource->computers->name}}
+                                    </td>
+                                    <td>
+                                    {{$resource->computers->price}}
                                     </td>
                                     <td>
                                     {{$resource->quantity}}
                                     </td>
                                     <td>
-                                    Wartość
+                                    <?php echo ($resource->computers->price)*($resource->quantity);?>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="py-4">
+                        Wystaw zasoby do symulacji
+                        <div>
+                            <form method="POST" action="{{route('create-offer-simulation')}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                @foreach($resources as $resource)
+                                    <fieldset class="bg-light p-2" style="border: 1px solid black">
+                                    <legend>Komputer:  {{$resource->computers->name}}</legend>
+
+                                    <div>
+                                    Twoja cena za jeden zestaw (cena zakupu {{$resource->computers->price}})
+                                    <input class="form-control" type="number" step="0.01" name="price[]">
+                                    </div>
+                                    <div>
+                                    Ilość zestawów, które chcesz wystawić do symulacji
+                                    <input class="form-control" name="quantity[]" type="number" min="0" max="{{$resource->quantity}}">
+                                    </div>
+                                    </fieldset>
+                                @endforeach
+                                <div class="py-4">
+                                <input class="btn btn-success" type="submit" value="Wystaw ofertę do symulacji">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     
 

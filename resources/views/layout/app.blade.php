@@ -38,7 +38,7 @@
                                     </li>
                                     @else
                                     <li class="nav-item">
-                                        <a class="nav-link" href="">Komputery</a>
+                                        <a class="nav-link" href="{{route('user-computers')}}">Komputery</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('user-resources') }}">Zasoby</a>

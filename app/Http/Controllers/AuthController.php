@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Session;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -23,14 +24,23 @@ class AuthController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-   
+        $user_active = User::where([['email', '=', $request->email], ['active', '=', 1]])->get();
+        $check = count($user_active);
+       
+        if($check==1)
+        {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->intended('home')
                         ->withSuccess('Signed in');
         }
   
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->with('error_login', 'Nieprawidłowe dane logowania');
+        }
+        else
+        {
+            return redirect("login")->with('error_login', 'Konto nieaktywne');
+        }
     }
 
 
@@ -52,6 +62,12 @@ class AuthController extends Controller
            
         $data = $request->all();
         $check = $this->create($data);
+
+        $cash = new Company;
+        $cash->user_id = $check->id;
+        $cash->cash = 50000;
+
+        $cash->save();
          
         return redirect("dashboard")->withSuccess('You have signed-in');
     }

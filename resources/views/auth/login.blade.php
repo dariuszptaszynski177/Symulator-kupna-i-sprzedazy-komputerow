@@ -37,6 +37,7 @@
                                 <button type="submit" class="btn btn-dark btn-block">Zaloguj</button>
                             </div>
                         </form>
+                        {!! \Session::get('error_login') !!}
 
                     </div>
                 </div>

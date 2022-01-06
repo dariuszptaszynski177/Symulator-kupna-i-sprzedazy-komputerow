@@ -19,15 +19,38 @@
                         </div>
                     @endif
 
-                    Symulacje
+                    Aktualne symulacje
 
+                    <div>
+                        <table>
+                            <tr>
+<th>Id</th>
+<th>User</th>
+<th>Komputer</th>
+<th>Ilość</th>
+<th>Cena</th>
+<th>Wartość</th>
+</tr>
                     @foreach($simulations as $simulation)
-                        {{$simulation->computer_id}}
+                    <tr>
+                        <td>{{$simulation->id}}</td>
+                        <td>{{$simulation->user_id}}</td>
+                        <td>{{$simulation->computer_id}}<td>
+                        <td>{{$simulation->quantity}}</td>
+                        <td>{{$simulation->price}}<td>
+                        <td><?php echo ($simulation->quantity)*($simulation->price); ?> zł</td>
+</tr>
                     @endforeach
+</table>
+</div>
                     
                     
 
                 </div>
+
+                <div>
+Historia symulacji
+</div>
                 <div class="card-body">
                     <div class="panel-body">
                      
