@@ -25,7 +25,7 @@
                         <table>
                             <tr>
                                 <th>Id</th>
-                                <th>User</th>
+                                <!-- <th>User</th> -->
                                 <th>Komputer</th>
                                 <th>Ilość</th>
                                 <th>Cena</th>
@@ -34,10 +34,10 @@
                                 @foreach($simulations as $simulation)
                                 <tr>
                                     <td>{{$simulation->id}}</td>
-                                    <td>{{$simulation->user_id}}</td>
-                                    <td>{{$simulation->computer_id}}</td>
+                                    <!-- <td>{{$simulation->user_id}}</td> -->
+                                    <td>{{$simulation->computers->name}}</td>
                                     <td>{{$simulation->quantity}}</td>
-                                    <td>{{$simulation->price}}</td>
+                                    <td>{{$simulation->price}} zł</td>
                                     <td><?php echo ($simulation->quantity)*($simulation->price); ?> zł</td>
                                 </tr>
                                 @endforeach

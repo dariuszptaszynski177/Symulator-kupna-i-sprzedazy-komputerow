@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Simulation extends Model
 {
     use HasFactory;
+
+    public function computers()
+    {
+        return $this->belongsTo(Computer::class, 'computer_id', 'id');
+    }
 }

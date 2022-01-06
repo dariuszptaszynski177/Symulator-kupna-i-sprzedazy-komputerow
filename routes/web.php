@@ -47,7 +47,12 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin/conditions/simulation/edit/{id}', 'App\Http\Controllers\AdminPanelController@conditions_simulation_edit')->name('conditions-edit-simulation');
     Route::post('/admin/conditions/simulation/update', 'App\Http\Controllers\AdminPanelController@conditions_simulation_update')->name('conditions-simulation-update');
 
+    Route::get('/users_resources', 'App\Http\Controllers\AdminPanelController@users_resources')->name('users_resources');
+
     Route::get('/admin/simulations', 'App\Http\Controllers\AdminPanelController@simulations')->name('admin-simulations');
     Route::post('/admin/simulation/accept-offer', 'App\Http\Controllers\AdminPanelController@simulation_accept_offer')->name('simulation-accept-offer');
     Route::post('/admin/simulation/decline-offer', 'App\Http\Controllers\AdminPanelController@simulation_decline_offer')->name('simulation-decline-offer');
+    Route::post('/admin/simulation/decline-other-offer', 'App\Http\Controllers\AdminPanelController@simulation_decline_other_offer')->name('simulation-decline-other-offer');
+
+    Route::get('/admin/history-simulations', 'App\Http\Controllers\AdminPanelController@history_simulations')->name('history-simulations');
 });

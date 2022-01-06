@@ -19,12 +19,7 @@
                         </div>
                     @endif
 
-                    <ul>
-                        <li><a href="{{route('admin-users')}}">Użytkownicy</a></li>
-                        <li><a href="{{route('computers')}}">Komputery</a></li>
-                        <li><a href="{{route('admin-simulations')}}">Symulacje</a></li>
-                        <li><a href="{{route('conditions')}}">Warunki do sumulacji</a></li>
-                    </ul>
+                    @include('admin.admin_menu')
 
                     <div>
                         <div>
@@ -51,39 +46,19 @@
                         <div class="py-4">
                             <p class="text-danger">Oferty, które nie spełaniają kryteriów</p>
                             <table>
-                                <tr>
-                                <th>Id</th>
-                                    <th>Użytkownik</th>
-                                    <th>Komputer</th>
-                                    <th>Ilość</th>
-                                    <th>Cena</th>
-                                    <!-- <th colspan="2">Akcje</th> -->
-                                </tr>
-                                @foreach($other_offers as $other_offer)
+                                <thead>
                                     <tr>
-                                        <td>
-                                            {{$other_offer->id}}
-                                        </td>
-                                        <td>
-                                            {{$other_offer->user_id}}
-                                        </td>
-                                        <td>
-                                            {{$other_offer->computer_id}}
-                                        </td>
-                                        <td>
-                                            {{$other_offer->quantity}}
-                                        </td>
-                                        <td>
-                                            {{$other_offer->price}}
-                                        </td>
-                                        <!-- <td>
-                                            <button class="btn btn-success">Kup</button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger">Odrzuć</button>
-                                        </td> -->
+                                        <th>Id</th>
+                                        <th>Użytkownik</th>
+                                        <th>Komputer</th>
+                                        <th>Ilość</th>
+                                        <th>Cena</th>
+                                        <th>Akcja</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody class="offers_other_list">
+                                    @include('admin.simulations.other_offers_list')
+                                </tbody>
                             </table>
                             <p class="confirm"></p>
 
@@ -167,6 +142,39 @@ table {
         {
         // console.log(data);
         offersList.innerHTML = data.offers;
+        let confirm = document.querySelector('.confirm');
+        confirm.innerHTML = "Odrzucono ofertę kupna";
+
+        setTimeout(function(){
+        confirm.innerHTML = " "
+        }, 2000);
+        
+        },
+        error:function(){
+        alert("error");
+        }
+        })
+
+    });
+    }
+
+
+
+    function decline_other_offer(offer_id, user_id, computer_id, quantity, price)
+    {
+        $(document).ready(function(){
+        var url = "{{route('simulation-decline-other-offer')}}";
+        var token = "{{ csrf_token()}}";
+        var offersOtherList = document.querySelector('.offers_other_list');
+        $.ajax({
+        type: "POST",
+        url: url,
+        data: {offer_id:offer_id, user_id:user_id, computer_id:computer_id, quantity:quantity, price:price ,_token:token},
+        dataType: 'json',
+        success: function(data)
+        {
+        // console.log(data);
+        offersOtherList.innerHTML = data.other_offers;
         let confirm = document.querySelector('.confirm');
         confirm.innerHTML = "Odrzucono ofertę kupna";
 

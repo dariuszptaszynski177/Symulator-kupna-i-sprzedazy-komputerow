@@ -19,12 +19,7 @@
                         </div>
                     @endif
 
-                    <ul>
-                        <li><a href="{{route('admin-users')}}">Użytkownicy</a></li>
-                        <li><a href="{{route('computers')}}">Komputery</a></li>
-                        <li><a href="{{route('admin-simulations')}}">Symulacje</a></li>
-                        <li><a href="{{route('conditions')}}">Warunki do sumulacji</a></li>
-                    </ul>
+                    @include('admin.admin_menu')
 
                     <div>
                         <div>

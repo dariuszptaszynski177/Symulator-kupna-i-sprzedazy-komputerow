@@ -44,13 +44,13 @@
                                     {{$resource->computers->name}}
                                     </td>
                                     <td>
-                                    {{$resource->computers->price}}
+                                    {{$resource->computers->price}} zł
                                     </td>
                                     <td>
                                     {{$resource->quantity}}
                                     </td>
                                     <td>
-                                    <?php echo ($resource->computers->price)*($resource->quantity);?>
+                                    <?php echo ($resource->computers->price)*($resource->quantity);?> zł
                                     </td>
                                 </tr>
                                 @endforeach
@@ -95,4 +95,16 @@
         </div>
     </div>
 </div>
+
+<style>
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+table {
+  
+  border-collapse: collapse;
+}
+</style>
 @endsection

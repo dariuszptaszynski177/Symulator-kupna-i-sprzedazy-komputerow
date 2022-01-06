@@ -42,7 +42,7 @@
                                     {{$computer->name}}
                                     </td>
                                     <td>
-                                    {{$computer->price}}
+                                    {{$computer->price}} zł
                                     </td>
                                 </tr>
                                 @endforeach
@@ -64,7 +64,7 @@
 <?php $id++; ?>
 @endforeach
 <div class="py-2">
-<input type="submit" class="btn btn-success">
+<input type="submit" class="btn btn-success" value="Kup komputery">
 </div>
 </form>
 <h4>Wartość: <span class="value_computers"></span></h4>
@@ -82,6 +82,18 @@
         </div>
     </div>
 </div>
+
+<style>
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+table {
+  
+  border-collapse: collapse;
+}
+</style>
 
 <script>
 let prices = document.querySelectorAll('.prices');

@@ -211,7 +211,7 @@ class AdminPanelController extends Controller
         $simulation_log = new SimulationLog;
         $simulation_log->user_id = $user_id;
         $simulation_log->offer_id = $offer_id;
-        $simulation_log->status = "kupione";
+        $simulation_log->status = "Kupione";
         $simulation_log->information = "Zapłacono ".$cash." zł";
 
         $simulation_log->save();
@@ -314,5 +314,81 @@ class AdminPanelController extends Controller
         return response()->json(['offers'=>$content]);
 
 
+    }
+
+    public function simulation_decline_other_offer(Request $request)
+    {
+        $offer_id = $request->offer_id;
+        $user_id = $request->user_id;
+        $computer_id = $request->computer_id;
+        $quantity = $request->quantity;
+        $price = $request->price;
+
+        $user_resources = Resource::where([['user_id', '=', $user_id], ['computer_id', '=', $computer_id]])->first()->quantity;
+        $temp_quantity = $user_resources+$quantity;
+        $user_resources_update = Resource::where([['user_id', '=', $user_id], ['computer_id', '=', $computer_id]])->update(['quantity'=>$temp_quantity]);
+    
+        $situation = Simulation::where('id', '=', $offer_id)->update(['done'=>1]);
+
+        $simulation_log = new SimulationLog;
+        $simulation_log->user_id = $user_id;
+        $simulation_log->offer_id = $offer_id;
+        $simulation_log->status = "Odrzucone";
+        $simulation_log->information = "Oferta odrzucona, nie spełnia warunków";
+
+        $simulation_log->save();
+
+
+        $conditions = SimulationCondition::first();
+        // dd($conditions);
+        if($conditions->inflation<4)
+        {
+            $cash = 6000;
+        }
+        elseif($conditions->inflation>5 && $conditions->inflation<7)
+        {
+            $cash = 5000;
+        }
+        elseif($conditions->inflation>7)
+        {
+            $cash = 4000;
+        }
+
+        if($conditions->situation=="dobra")
+        {
+            $quantity = 8;
+        }
+        elseif($conditions->situation=="umiarkowana")
+        {
+            $quantity = 6;
+        }
+        else
+        {
+            $quantity = 4;
+        }
+
+        $other_offers = Simulation::where([['price', '>', $cash], ['done', '=', 0]])->orWhere([['quantity', '>', $quantity], ['done', '=', 0]])->get();
+
+        $user_cash = Company::where('user_id', '=', $user_id)->first()->cash;
+        $temp_cash = $user_cash-(500*$quantity);
+        $user_cash_update = Company::where('user_id', '=', $user_id)->update(['cash'=>$temp_cash]);
+        
+
+        $content = view('admin.simulations.other_offers_list', compact('other_offers'))->render();
+        return response()->json(['other_offers'=>$content]);
+    }
+
+    public function users_resources()
+    {
+        $users_resources = Company::where('user_id', '!=', 1)->get();
+
+        return view('admin.users_resources', ['users_resources'=>$users_resources]);
+    }
+
+    public function history_simulations()
+    {
+        $history_simulations = SimulationLog::get();
+        
+        return view('admin.history_simulations.index', ['simulation_logs'=>$history_simulations]);
     }
 }
