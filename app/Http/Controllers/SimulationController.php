@@ -7,6 +7,7 @@ use App\Models\Resource;
 use App\Models\Simulation;
 use App\Models\Company;
 use App\Models\Computer;
+use App\Models\SimulationLog;
 
 class SimulationController extends Controller
 {
@@ -20,9 +21,10 @@ class SimulationController extends Controller
 
     public function simulations()
     {
-        $simulations = Simulation::where('user_id', '=', auth()->user()->id)->get();
+        $simulations = Simulation::where([['user_id', '=', auth()->user()->id], ['done', '=', 0]])->get();
+        $simulation_logs = SimulationLog::where('user_id', '=', auth()->user()->id)->get();
 
-        return view('user.simulations', ['simulations'=>$simulations]);
+        return view('user.simulations', ['simulations'=>$simulations, 'simulation_logs'=>$simulation_logs]);
     }
 
     public function computers()
@@ -97,8 +99,13 @@ class SimulationController extends Controller
         $quantity = $request->quantity;
         $count = count($price);
 
+        
+
         for($i=0;$i<$count;$i++)
         {
+
+            if($quantity[$i]!=0 && $price[$i]!=0)
+            {
         $simulation = new Simulation;
         $simulation->user_id = auth()->user()->id;
         $simulation->computer_id = $i+1;
@@ -111,11 +118,15 @@ class SimulationController extends Controller
         $quantity_user = Resource::where([['user_id', '=', auth()->user()->id], ['computer_id', '=', $i+1]])->first()->quantity;
         
         $temp_quantity=$quantity_user - $quantity[$i];
+
+        
         $update_quantity = Resource::where([['user_id', '=', auth()->user()->id], ['computer_id', '=', $i+1]])->update(['quantity'=>$temp_quantity]);
+            }
 
         }
 
         return redirect()->route('user-simulations');
 
     }
+
 }

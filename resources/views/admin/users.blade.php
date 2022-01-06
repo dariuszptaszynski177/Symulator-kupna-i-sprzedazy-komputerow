@@ -8,10 +8,11 @@
                 <div class="card-header">Admin panel</div>
 
                 <div class="card-body">
-                    <ul>
+                <ul>
                         <li><a href="{{route('admin-users')}}">Użytkownicy</a></li>
-                        <li><a href="">Symulacje</a></li>
-                        <li><a href="">Warunki do sumulacji</a></li>
+                        <li><a href="{{route('computers')}}">Komputery</a></li>
+                        <li><a href="{{route('admin-simulations')}}">Symulacje</a></li>
+                        <li><a href="{{route('conditions')}}">Warunki do sumulacji</a></li>
                     </ul>
                 </div>
 

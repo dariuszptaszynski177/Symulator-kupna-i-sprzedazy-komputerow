@@ -40,5 +40,14 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/admin/computer-save', 'App\Http\Controllers\AdminPanelController@computer_save')->name('computer-save');
     Route::get('/admin/computer-edit/{id}', 'App\Http\Controllers\AdminPanelController@computer_edit')->name('computer-edit');
     Route::post('/admin/computer-update', 'App\Http\Controllers\AdminPanelController@computer_update')->name('computer-update');
-    
+    Route::get('/admin/conditions', 'App\Http\Controllers\AdminPanelController@conditions')->name('conditions');
+    Route::get('/admin/conditions/create', 'App\Http\Controllers\AdminPanelController@conditions_create')->name('conditions-create');
+    Route::post('/admin/conditions/save', 'App\Http\Controllers\AdminPanelController@conditions_save')->name('conditions-save');
+
+    Route::get('/admin/conditions/simulation/edit/{id}', 'App\Http\Controllers\AdminPanelController@conditions_simulation_edit')->name('conditions-edit-simulation');
+    Route::post('/admin/conditions/simulation/update', 'App\Http\Controllers\AdminPanelController@conditions_simulation_update')->name('conditions-simulation-update');
+
+    Route::get('/admin/simulations', 'App\Http\Controllers\AdminPanelController@simulations')->name('admin-simulations');
+    Route::post('/admin/simulation/accept-offer', 'App\Http\Controllers\AdminPanelController@simulation_accept_offer')->name('simulation-accept-offer');
+    Route::post('/admin/simulation/decline-offer', 'App\Http\Controllers\AdminPanelController@simulation_decline_offer')->name('simulation-decline-offer');
 });

@@ -69,11 +69,11 @@
 
                                     <div>
                                     Twoja cena za jeden zestaw (cena zakupu {{$resource->computers->price}})
-                                    <input class="form-control" type="number" step="0.01" name="price[]">
+                                    <input class="form-control" type="number" step="0.01" name="price[]" value="0.00">
                                     </div>
                                     <div>
                                     Ilość zestawów, które chcesz wystawić do symulacji
-                                    <input class="form-control" name="quantity[]" type="number" min="0" max="{{$resource->quantity}}">
+                                    <input class="form-control" name="quantity[]" type="number" min="0" max="{{$resource->quantity}}" value="0">
                                     </div>
                                     </fieldset>
                                 @endforeach

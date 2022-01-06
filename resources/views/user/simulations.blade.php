@@ -24,33 +24,58 @@
                     <div>
                         <table>
                             <tr>
-<th>Id</th>
-<th>User</th>
-<th>Komputer</th>
-<th>Ilość</th>
-<th>Cena</th>
-<th>Wartość</th>
-</tr>
-                    @foreach($simulations as $simulation)
-                    <tr>
-                        <td>{{$simulation->id}}</td>
-                        <td>{{$simulation->user_id}}</td>
-                        <td>{{$simulation->computer_id}}<td>
-                        <td>{{$simulation->quantity}}</td>
-                        <td>{{$simulation->price}}<td>
-                        <td><?php echo ($simulation->quantity)*($simulation->price); ?> zł</td>
-</tr>
-                    @endforeach
-</table>
-</div>
+                                <th>Id</th>
+                                <th>User</th>
+                                <th>Komputer</th>
+                                <th>Ilość</th>
+                                <th>Cena</th>
+                                <th>Wartość</th>
+                                </tr>
+                                @foreach($simulations as $simulation)
+                                <tr>
+                                    <td>{{$simulation->id}}</td>
+                                    <td>{{$simulation->user_id}}</td>
+                                    <td>{{$simulation->computer_id}}</td>
+                                    <td>{{$simulation->quantity}}</td>
+                                    <td>{{$simulation->price}}</td>
+                                    <td><?php echo ($simulation->quantity)*($simulation->price); ?> zł</td>
+                                </tr>
+                                @endforeach
+                        </table>
+                    </div>
                     
+                    <div class="py-4">
+                        Historia symulacji
+                        <table>
+                            <tr>
+                                <th>Id</th>
+                                <th>Id symulacji</th>
+                                <th>Status</th>
+                                <th>Dodatkowe informacje</th>
+                            </tr>
+                            @foreach($simulation_logs as $simulation_log)
+                                <tr>
+                                    <td>
+                                    {{$simulation_log->id}}
+                                    </td>
+                                    <td>
+                                    {{$simulation_log->offer_id}}
+                                    </td>
+                                    <td>
+                                    {{$simulation_log->status}}
+                                    </td>
+                                    <td>
+                                    {{$simulation_log->information}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
                     
 
                 </div>
 
-                <div>
-Historia symulacji
-</div>
+                
                 <div class="card-body">
                     <div class="panel-body">
                      
@@ -60,4 +85,16 @@ Historia symulacji
         </div>
     </div>
 </div>
+
+<style>
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+</style>
 @endsection
